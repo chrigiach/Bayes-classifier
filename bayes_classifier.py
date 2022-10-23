@@ -5,6 +5,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import multivariate_normal
+import math
 
 # A priori knowledge
 m1 = np.array([0.4, 0.8]) # mean values for class ω_1
@@ -25,24 +26,24 @@ distr1 = multivariate_normal(cov = cov_mat, mean = m1, seed = random_seed)
 distr2 = multivariate_normal(cov = cov_mat, mean = m2, seed = random_seed)
 
 # Generating 5000 samples out of the distributions
-data1 = distr1.rvs(size = 5000)
+data1 = distr1.rvs(size = 500)
 # Generating 5000 samples out of the distribution
-data2 = distr2.rvs(size = 5000)
+data2 = distr2.rvs(size = 500)
 
 # Plotting the generated samples
 # 2D plotting
-plt.figure()
-plt.plot(data1[:,0], data1[:,1], 'o', c = 'lime', markeredgewidth = 0.5, markeredgecolor = 'black')
-plt.title(f'2-D overview of the indicators for healthy people')
+fig = plt.figure(figsize=(10, 10), dpi=100)
+fig.suptitle('Distributions of microbiological indicators', fontsize=20)
+plt.plot(data1[:,0], data1[:,1], 'o', c = 'lime', markeredgewidth = 0.5, markeredgecolor = 'black', label = 'healthy')
 plt.xlabel('x_a')
 plt.ylabel('x_b')
+plt.plot(data2[:,0], data2[:,1], 'o', c = 'firebrick', markeredgewidth = 0.5, markeredgecolor = 'black', label = 'possible cancer existence')
 plt.axis('equal')
+plt.legend(loc="upper left")
 
-plt.figure()
-plt.plot(data2[:,0], data2[:,1], 'o', c = 'lime', markeredgewidth = 0.5, markeredgecolor = 'black')
-plt.title(f'2-D overview of the indicators for probable cancer existance people')
-plt.xlabel('x_a')
-plt.ylabel('x_b')
-plt.axis('equal')
+# Some representative values
 
-#3D plotting
+
+print('Some representative values for healthy people are:')
+
+print('Some representative values for people with possible cancer existence are:')
