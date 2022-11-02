@@ -86,3 +86,50 @@ for i in range(6):
 # Result A.1
 
 #We can observe that the density near the mean values is higher than the one at combinations away from them. At those distaned combinations it seems that it is highly rare to find a person with the related situation (has cancer or not). That can be easily shown at the 3d figure too. Higher blue points means healthy, higher red points means cancer. (that last one must be fixed a little!!!!!!!)
+
+# Task A.2
+
+# p(x) = p(x|ω1)*p(ω1) + p(x|ω2)*p(ω2)
+
+p = y1 * p_1 + y2 * p_2
+# 3D plotting
+fig = plt.figure(figsize=(10, 10)) # prepare a figure
+# ax = fig.add_subplot(111, projection='3d') # the figure will hold a 3d plot
+ax = plt.axes(projection = '3d')
+ax.set_title("Pdf representative values vizualization")
+ax.set_xlabel("x_a indicator")
+ax.set_ylabel("x_b indicator")
+ax.set_zlabel("Pdf values for total probability distribution")
+for i in range(1000):
+  ax.scatter(data[i][0], data[i][1], p[i], c = "blue")
+
+ax.view_init(35, 35)
+
+
+# Task A.3
+
+# a posteriori
+
+# p(ω1|x) = (p(x|ω1)/p(x))*p(ω1)
+# p(ω2|x) = (p(x|ω2)/p(x))*p(ω2)
+
+p_aposteriori_1 = (y1/p) * p_1;
+p_aposteriori_2 = (y2/p) * p_2;
+
+fig = plt.figure(figsize=(10, 10)) # prepare a figure
+# ax = fig.add_subplot(111, projection='3d') # the figure will hold a 3d plot
+ax = plt.axes(projection = '3d')
+ax.set_title("Pdf representative values vizualization")
+ax.set_xlabel("x_a indicator")
+ax.set_ylabel("x_b indicator")
+ax.set_zlabel("Pdf values for total probability distribution")
+x, y = data[:,0], data[:,1]
+# for i in range(1000):
+#   ax.plot_trisurf(data[i][0], data[i][1], p_aposteriori_1[i], c = "green")
+# for i in range(1000):
+#   ax.plot(data[i][0], data[i][1], p_aposteriori_2[i], c = "red", marker = "x")
+ax.plot_trisurf(x, y, p_aposteriori_1)
+ax.plot_trisurf(x, y, p_aposteriori_2)
+
+
+# ax.view_init(15, 0)
