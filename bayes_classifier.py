@@ -130,3 +130,11 @@ ax.plot_trisurf(x, y, p_aposteriori_2)
 
 
 # ax.view_init(15, 0)
+
+
+
+
+# Task A.4
+
+# Bayes error
+
