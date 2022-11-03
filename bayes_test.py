@@ -31,11 +31,15 @@ random_seed = 1000
 
 #Data for ω1 class "healthy people"
 distr1 = multivariate_normal(cov = cov_mat, mean = m1, seed = random_seed)
-mean1, mean2 = m1[0], m1[1]
+# mean1, mean2 = m1[0], m1[1]
 sigma1, sigma2 = cov_mat[0, 0], cov_mat[1, 1]
 
-x1 = linspace(mean1 - 3*sigma1, mean1 + 3*sigma1, step=0.1)
-x2 = linspace(mean2 - 3*sigma2, mean2 + 3*sigma2, step=0.1)
+# x1 = linspace(mean1 - 3*sigma1, mean1 + 3*sigma1, step=0.1)
+# x2 = linspace(mean2 - 3*sigma2, mean2 + 3*sigma2, step=0.1)
+# X1, X2 = np.meshgrid(x1, x2)
+
+x1 = linspace(m1[0] - 3*sigma1, m2[0] + 3*sigma1, step=0.1)
+x2 = linspace(m1[1] - 3*sigma1, m2[1] + 3*sigma1, step=0.1)
 X1, X2 = np.meshgrid(x1, x2)
 
 pdf1 = np.zeros(X1.shape)
@@ -45,16 +49,21 @@ for i in range(X1.shape[0]):
 
 #Data for ω2 class "possible existence of cancer"
 distr2 = multivariate_normal(cov = cov_mat, mean = m2, seed = random_seed)
-mean3, mean4 = m2[0], m2[1]
+pdf2 = np.zeros(X1.shape)
+for i in range(X1.shape[0]):
+  for j in range(X1.shape[1]):
+    pdf2[i, j] = distr2.pdf([X1[i, j], X2[i, j]])
 
-y1 = linspace(mean3 - 3*sigma1, mean3 + 3*sigma1, step=0.1)
-y2 = linspace(mean4 - 3*sigma2, mean4 + 3*sigma2, step=0.1)
-Y1, Y2 = np.meshgrid(y1, y2)
+# mean3, mean4 = m2[0], m2[1]
 
-pdf2 = np.zeros(Y1.shape)
-for i in range(Y1.shape[0]):
-    for j in range(Y1.shape[1]):
-        pdf2[i, j] = distr2.pdf([Y1[i, j], Y2[i, j]])
+# y1 = linspace(mean3 - 3*sigma1, mean3 + 3*sigma1, step=0.1)
+# y2 = linspace(mean4 - 3*sigma2, mean4 + 3*sigma2, step=0.1)
+# Y1, Y2 = np.meshgrid(y1, y2)
+
+# pdf2 = np.zeros(Y1.shape)
+# for i in range(Y1.shape[0]):
+#     for j in range(Y1.shape[1]):
+#         pdf2[i, j] = distr2.pdf([Y1[i, j], Y2[i, j]])
 
 #plotting
 fig = plt.figure(figsize=(15, 10))
@@ -64,15 +73,12 @@ plt.xlabel("x_a biological indicator")
 plt.ylabel("x_b biological indicator")
 ax.set_zlabel("pdf value")
 ax.plot_surface(X1, X2, pdf1, color="green")
-ax.plot_surface(Y1, Y2, pdf2, color="red")
+ax.plot_surface(X1, X2, pdf2, color="red")
 plt.legend(loc="upper right")
 plt.show()
 
 # # ***Task A.2***
 #Total Data
-# data = np.concatenate([X1, X2], [Y1, Y2])
-x_a_total = np.concatenate((X1, Y1), axis=0)
-x_b_total = np.concatenate((X2, Y2), axis=0)
 # p(x) = p(x|ω1)*p(ω1) + p(x|ω2)*p(ω2)
 p = pdf1 * p_1 + pdf2 * p_2
 print(p.shape)
@@ -85,8 +91,8 @@ plt.title("Total Probability Distribution")
 plt.xlabel("x_a biological indicator")
 plt.ylabel("x_b biological indicator")
 ax.set_zlabel("Value of total probability distribution function")
-# ax.plot_surface(pdf1, pdf2, p)
-# plt.show()
+ax.plot_surface(X1, X2, p)
+plt.show()
 
 
 
