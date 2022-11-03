@@ -75,7 +75,7 @@ ax.set_zlabel("pdf value")
 ax.plot_surface(X1, X2, pdf1, color="green")
 ax.plot_surface(X1, X2, pdf2, color="red")
 plt.legend(loc="upper right")
-plt.show()
+# plt.show()
 
 # # ***Task A.2***
 #Total Data
@@ -90,8 +90,30 @@ ax = plt.axes(projection = '3d')
 plt.title("Total Probability Distribution")
 plt.xlabel("x_a biological indicator")
 plt.ylabel("x_b biological indicator")
-ax.set_zlabel("Value of total probability distribution function")
+ax.set_zlabel("Value of total pdf")
 ax.plot_surface(X1, X2, p)
+# plt.show()
+
+
+# Task A.3
+
+# a posteriori
+
+# p(ω1|x) = (p(x|ω1)/p(x))*p(ω1)
+# p(ω2|x) = (p(x|ω2)/p(x))*p(ω2)
+
+p_aposteriori_1 = (pdf1/p) * p_1
+p_aposteriori_2 = (pdf2/p) * p_2
+
+fig = plt.figure(figsize=(10, 10)) # prepare a figure
+# ax = fig.add_subplot(111, projection='3d') # the figure will hold a 3d plot
+ax = plt.axes(projection = '3d')
+plt.title("A-posteriori probabilities P(ω1|x) and P(ω2|x) according to Bayes Theorem")
+plt.xlabel("x_a indicator")
+plt.ylabel("x_b indicator")
+ax.set_zlabel("Value of both A-posteriori probabilities")
+ax.plot_surface(X1, X2, p_aposteriori_1)
+ax.plot_surface(X1, X2, p_aposteriori_2)
 plt.show()
 
 
