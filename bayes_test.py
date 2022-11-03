@@ -43,7 +43,7 @@ for i in range(X1.shape[0]):
     for j in range(X1.shape[1]):
         pdf1[i, j] = distr1.pdf([X1[i, j], X2[i, j]])
 
-#Data for ω2 class "possible existance of cancer"
+#Data for ω2 class "possible existence of cancer"
 distr2 = multivariate_normal(cov = cov_mat, mean = m2, seed = random_seed)
 mean3, mean4 = m2[0], m2[1]
 
@@ -57,13 +57,23 @@ for i in range(Y1.shape[0]):
         pdf2[i, j] = distr2.pdf([Y1[i, j], Y2[i, j]])
 
 #plotting
-fig = plt.figure(figsize=(10, 10))
+fig = plt.figure(figsize=(15, 10))
 ax = plt.axes(projection = '3d')
-ax.plot_surface(X1, X2, pdf1)
-ax.plot_surface(Y1, Y2, pdf2)
+plt.title("p(x|ω1) and p(x|ω2) for descrete x values following a Gaussian Distribution with μ1=(0.4, 0.8), μ2=(1.5, 2.7) and Σ=([1.5, 0], [0, 0.8])")
+plt.xlabel("x_a biological indicator")
+plt.ylabel("x_b biological indicator")
+ax.set_zlabel("pdf value")
+ax.plot_surface(X1, X2, pdf1, color="green")
+ax.plot_surface(Y1, Y2, pdf2, color="red")
+# plt.legend(loc="upper right")
 plt.show()
 
 # # ***Task A.2***
+# p(x) = p(x|ω1)*p(ω1) + p(x|ω2)*p(ω2)
+p = pdf1 * p_1 + pdf2 * p_2
+
+fig = plt.figure(figsize=(10, 10))
+ax = plt.axes(projection = '3d')
 
 
 
