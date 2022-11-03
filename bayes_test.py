@@ -14,8 +14,8 @@ cov_mat = np.array([[1.5, 0], [0, 0.8]]) # covariance matrix for the 2 data indi
 p_1 = 0.95 # a priori probability for class ω_1
 p_2 = 0.05 # a priori probability for class ω_2
 
-# # ***Task A.1***
 
+#Function that configures the typical numpy.linespace function so that we can define the step
 def linspace(start, stop, step=1.):
   """
     Like np.linspace but uses step instead of num
@@ -24,11 +24,12 @@ def linspace(start, stop, step=1.):
   """
   return np.linspace(start, stop, int((stop - start) / step + 1))
 
+
+# # ***Task A.1***
 # # Initializing the random seed
 random_seed = 1000
 
-
-#Data
+#Data for ω1 class "healthy people"
 distr1 = multivariate_normal(cov = cov_mat, mean = m1, seed = random_seed)
 mean1, mean2 = m1[0], m1[1]
 sigma1, sigma2 = cov_mat[0, 0], cov_mat[1, 1]
@@ -42,6 +43,7 @@ for i in range(X1.shape[0]):
     for j in range(X1.shape[1]):
         pdf1[i, j] = distr1.pdf([X1[i, j], X2[i, j]])
 
+#Data for ω2 class "possible existance of cancer"
 distr2 = multivariate_normal(cov = cov_mat, mean = m2, seed = random_seed)
 mean3, mean4 = m2[0], m2[1]
 
@@ -61,6 +63,7 @@ ax.plot_surface(X1, X2, pdf1)
 ax.plot_surface(Y1, Y2, pdf2)
 plt.show()
 
+# # ***Task A.2***
 
 
 
