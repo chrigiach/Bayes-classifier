@@ -65,15 +65,28 @@ plt.ylabel("x_b biological indicator")
 ax.set_zlabel("pdf value")
 ax.plot_surface(X1, X2, pdf1, color="green")
 ax.plot_surface(Y1, Y2, pdf2, color="red")
-# plt.legend(loc="upper right")
+plt.legend(loc="upper right")
 plt.show()
 
 # # ***Task A.2***
+#Total Data
+# data = np.concatenate([X1, X2], [Y1, Y2])
+x_a_total = np.concatenate((X1, Y1), axis=0)
+x_b_total = np.concatenate((X2, Y2), axis=0)
 # p(x) = p(x|ω1)*p(ω1) + p(x|ω2)*p(ω2)
 p = pdf1 * p_1 + pdf2 * p_2
+print(p.shape)
+print(pdf1.shape)
+print(pdf2.shape)
 
 fig = plt.figure(figsize=(10, 10))
 ax = plt.axes(projection = '3d')
+plt.title("Total Probability Distribution")
+plt.xlabel("x_a biological indicator")
+plt.ylabel("x_b biological indicator")
+ax.set_zlabel("Value of total probability distribution function")
+# ax.plot_surface(pdf1, pdf2, p)
+# plt.show()
 
 
 
