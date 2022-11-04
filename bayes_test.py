@@ -63,7 +63,7 @@ for i in range(X1.shape[0]):
     pdf2[i, j] = distr2.pdf([X1[i, j], X2[i, j]])
 
 
-#plotting
+#plotting in the same 3-D figure the two Probability Density Functions
 fig = plt.figure(figsize=(15, 10))
 ax = plt.axes(projection = '3d')
 plt.title("p(x|ω1) and p(x|ω2) for descrete x values following a Gaussian Distribution with μ1=(0.4, 0.8), μ2=(1.5, 2.7) and Σ=([1.5, 0], [0, 0.8])")
@@ -76,13 +76,10 @@ plt.legend(loc="upper right")
 # plt.show()
 
 # # ***Task A.2***
-#Total Data
-# p(x) = p(x|ω1)*p(ω1) + p(x|ω2)*p(ω2)
+# Total Probability: P(x) = p(x|ω1)*P(ω1) + p(x|ω2)*P(ω2)
 p = pdf1 * p_1 + pdf2 * p_2
-print(p.shape)
-print(pdf1.shape)
-print(pdf2.shape)
 
+#Plotting the total PDF in a 3-D figure
 fig = plt.figure(figsize=(10, 10))
 ax = plt.axes(projection = '3d')
 plt.title("Total Probability Distribution")
@@ -95,16 +92,15 @@ ax.plot_surface(X1, X2, p)
 
 # Task A.3
 
-# a posteriori
-
-# p(ω1|x) = (p(x|ω1)/p(x))*p(ω1)
-# p(ω2|x) = (p(x|ω2)/p(x))*p(ω2)
+#A posteriori probabilities according to Bayes Theorem:
+# p(ω1|x) = (p(x|ω1)/P(x)) * P(ω1)
+# p(ω2|x) = (p(x|ω2)/P(x)) * P(ω2)
 
 p_aposteriori_1 = (pdf1/p) * p_1
 p_aposteriori_2 = (pdf2/p) * p_2
 
+#Plotting the two a-posteriori probabilites as calculated from the Bayes Theorem
 fig = plt.figure(figsize=(10, 10)) # prepare a figure
-# ax = fig.add_subplot(111, projection='3d') # the figure will hold a 3d plot
 ax = plt.axes(projection = '3d')
 plt.title("A-posteriori probabilities P(ω1|x) and P(ω2|x) according to Bayes Theorem")
 plt.xlabel("x_a indicator")
