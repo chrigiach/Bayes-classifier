@@ -138,3 +138,4 @@ ax.plot_trisurf(x, y, p_aposteriori_2)
 
 # Bayes error
 
+g = 1
