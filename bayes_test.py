@@ -117,4 +117,8 @@ ax.plot_surface(X1, X2, p_aposteriori_2)
 plt.show()
 
 
+# Task A.4
+
+# Bayesian error
+
 
