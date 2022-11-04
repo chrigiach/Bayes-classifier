@@ -80,7 +80,7 @@ for i in range(X1.shape[0]):
 
 # # ***Task A.2***
 # Total Probability: P(x) = p(x|ω1)*P(ω1) + p(x|ω2)*P(ω2)
-p = pdf1 * p_1 + pdf2 * p_2
+p = np.array(pdf1 * p_1 + pdf2 * p_2)
 
 #Plotting the total PDF in a 3-D figure
 # fig = plt.figure(figsize=(10, 10))
@@ -99,8 +99,8 @@ p = pdf1 * p_1 + pdf2 * p_2
 # p(ω1|x) = (p(x|ω1)/P(x)) * P(ω1)
 # p(ω2|x) = (p(x|ω2)/P(x)) * P(ω2)
 
-p_aposteriori_1 = (pdf1/p) * p_1
-p_aposteriori_2 = (pdf2/p) * p_2
+p_aposteriori_1 = (np.divide(pdf1, p)) * p_1
+p_aposteriori_2 = (np.divide(pdf2, p)) * p_2
 
 #Plotting the two a-posteriori probabilites as calculated from the Bayes Theorem
 # fig = plt.figure(figsize=(10, 10)) # prepare a figure
@@ -123,12 +123,11 @@ for i in range(len(X1)):
     for j in range(len(X1[0])):
       if pdf1[i][j] >= pdf2[i][j]:
           # true is class 1 and the error is to choose class 2
-          errors[i][j] = pdf2[i][j] * p_2 # calculation of error for each specific point
+          errors[i][j] = p_aposteriori_2[i][j] * p[i][j] # calculation of error for each specific point
       else:
           # true is class 2 and the error is to choose class 1
-          errors[i][j] = pdf1[i][j] * p_1 # calculation of error for each specific point
+          errors[i][j] = p_aposteriori_1[i][j] * p[i][j] # calculation of error for each specific point
 
-# errors *= dataset_step**2
 bayes_mean_error = np.average(errors) # the mean bayesian error calculation
 print("The mean bayesian error is:" + str(bayes_mean_error))
 
