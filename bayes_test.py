@@ -15,7 +15,8 @@ p_1 = 0.95 # a priori probability for class ω_1
 p_2 = 0.05 # a priori probability for class ω_2
 
 
-#Function that configures the typical numpy.linespace function so that we can define the step
+#Function that configures the typical numpy.linespace function so that we can define the step,
+#instead of the numbers of samples (num)
 def linspace(start, stop, step=1.):
   """
     Like np.linspace but uses step instead of num
@@ -29,41 +30,38 @@ def linspace(start, stop, step=1.):
 # # Initializing the random seed
 random_seed = 1000
 
-#Data for ω1 class "healthy people"
+#Gaussian distribution for ω1 class "healthy people"
 distr1 = multivariate_normal(cov = cov_mat, mean = m1, seed = random_seed)
-# mean1, mean2 = m1[0], m1[1]
+#Gaussian distribution for ω2 class "possible existence of cancer"
+distr2 = multivariate_normal(cov = cov_mat, mean = m2, seed = random_seed)
+
+#Setting as sigma_i the main diagonal values of the common covariance matrix
 sigma1, sigma2 = cov_mat[0, 0], cov_mat[1, 1]
 
-# x1 = linspace(mean1 - 3*sigma1, mean1 + 3*sigma1, step=0.1)
-# x2 = linspace(mean2 - 3*sigma2, mean2 + 3*sigma2, step=0.1)
-# X1, X2 = np.meshgrid(x1, x2)
-
+# We make the values of the x vector, where x = (x1, x2).
+# We take x1 in a range where: 
+#   minimum value = min_value(of the μ1 and μ2 first value) - 3*sigma1
+#   maximum value = max_value(of the μ1 and μ2 first value) + 3*sigma1
+# AS for the x2 on the other hand we take value in a range where:
+#   minimum value = min_value(of the μ1 and μ2 second value) - 3*sigma2
+#   maximum value = max_value(of the μ1 and μ2 second value) + 3*sigma2
+# We followed this procedure based on the method as described on rederence[1]
 x1 = linspace(m1[0] - 3*sigma1, m2[0] + 3*sigma1, step=0.1)
 x2 = linspace(m1[1] - 3*sigma1, m2[1] + 3*sigma1, step=0.1)
 X1, X2 = np.meshgrid(x1, x2)
 
+#We form the pdf for the Gaussian distribution of the first class ω1
 pdf1 = np.zeros(X1.shape)
 for i in range(X1.shape[0]):
     for j in range(X1.shape[1]):
         pdf1[i, j] = distr1.pdf([X1[i, j], X2[i, j]])
 
-#Data for ω2 class "possible existence of cancer"
-distr2 = multivariate_normal(cov = cov_mat, mean = m2, seed = random_seed)
+#We form the pdf for the Gaussian distribution of the second class ω2
 pdf2 = np.zeros(X1.shape)
 for i in range(X1.shape[0]):
   for j in range(X1.shape[1]):
     pdf2[i, j] = distr2.pdf([X1[i, j], X2[i, j]])
 
-# mean3, mean4 = m2[0], m2[1]
-
-# y1 = linspace(mean3 - 3*sigma1, mean3 + 3*sigma1, step=0.1)
-# y2 = linspace(mean4 - 3*sigma2, mean4 + 3*sigma2, step=0.1)
-# Y1, Y2 = np.meshgrid(y1, y2)
-
-# pdf2 = np.zeros(Y1.shape)
-# for i in range(Y1.shape[0]):
-#     for j in range(Y1.shape[1]):
-#         pdf2[i, j] = distr2.pdf([Y1[i, j], Y2[i, j]])
 
 #plotting
 fig = plt.figure(figsize=(15, 10))
