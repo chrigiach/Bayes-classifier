@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.stats import multivariate_normal
 from scipy.stats import norm
+from scipy.integrate import trapz
 import statistics
 
 # # A priori knowledge
@@ -46,8 +47,9 @@ sigma1, sigma2 = cov_mat[0, 0], cov_mat[1, 1]
 #   minimum value = min_value(of the μ1 and μ2 second value) - 3*sigma2
 #   maximum value = max_value(of the μ1 and μ2 second value) + 3*sigma2
 # We followed this procedure based on the method as described on rederence[1]
-x1 = linspace(m1[0] - 3*sigma1, m2[0] + 3*sigma1, step=0.1)
-x2 = linspace(m1[1] - 3*sigma1, m2[1] + 3*sigma1, step=0.1)
+dataset_step = 0.1
+x1 = linspace(m1[0] - 3*sigma1, m2[0] + 3*sigma1, step=dataset_step)
+x2 = linspace(m1[1] - 3*sigma1, m2[1] + 3*sigma1, step=dataset_step)
 X1, X2 = np.meshgrid(x1, x2)
 
 #We form the pdf for the Gaussian distribution of the first class ω1
@@ -118,13 +120,13 @@ errors = np.zeros(pdf1.shape) # table that will contain the errors for each poin
 # for each point of the data set
 for i in range(len(X1)):
     for j in range(len(X1[0])):
-        if pdf1[i][j] >= pdf2[i][j]:
-            # true is class 1 and the error is to choose class 2
-            errors[i][j] = pdf2[i][j] * p_2 # calculation of error for each specific point
-        else:
-            # true is class 2 and the error is to choose class 1
-            errors[i][j] = pdf1[i][j] * p_1 # calculation of error for each specific point
+      if pdf1[i][j] >= pdf2[i][j]:
+          # true is class 1 and the error is to choose class 2
+          errors[i][j] = pdf2[i][j] * p_2 # calculation of error for each specific point
+      else:
+          # true is class 2 and the error is to choose class 1
+          errors[i][j] = pdf1[i][j] * p_1 # calculation of error for each specific point
 
-
+# errors *= dataset_step**2
 bayes_mean_error = np.average(errors) # the mean bayesian error calculation
 print("The mean bayesian error is:" + str(bayes_mean_error))
