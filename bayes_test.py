@@ -114,19 +114,17 @@ plt.show()
 # Task A.4
 
 # Bayesian error
-errors = np.zeros(pdf1.shape);
+errors = np.zeros(pdf1.shape) # table that will contain the errors for each point of the data set
+# for each point of the data set
 for i in range(len(X1)):
     for j in range(len(X1[0])):
-        if pdf1[i][j] > pdf2[i][j]:
+        if pdf1[i][j] >= pdf2[i][j]:
             # true is class 1 and the error is to choose class 2
-            errors[i][j] = pdf2[i][j] * p_2;
-        elif pdf1[i][j] < pdf2[i][j]:
-            # true is class 2 and the error is to choose class 1
-            errors[i][j] = pdf1[i][j] * p_1;
+            errors[i][j] = pdf2[i][j] * p_2 # calculation of error for each specific point
         else:
-            errors[i][j] = 0;
+            # true is class 2 and the error is to choose class 1
+            errors[i][j] = pdf1[i][j] * p_1 # calculation of error for each specific point
 
-error_sum = sum(errors) # get the sum of each row
-new_error_sum = sum(error_sum) # get the final sum
-error_mean = new_error_sum/(len(errors)*len(errors[0]));
-print("The mean bayesian error is:" + str(error_mean))
+
+bayes_mean_error = np.average(errors) # the mean bayesian error calculation
+print("The mean bayesian error is:" + str(bayes_mean_error))
