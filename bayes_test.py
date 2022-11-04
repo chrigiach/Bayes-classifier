@@ -7,6 +7,7 @@ from scipy.stats import multivariate_normal
 from scipy.stats import norm
 from scipy.integrate import trapz
 import statistics
+from matplotlib import cm
 
 # # A priori knowledge
 m1 = np.array([0.4, 0.8]) # mean values for class ω_1
@@ -66,15 +67,15 @@ for i in range(X1.shape[0]):
 
 
 #plotting in the same 3-D figure the two Probability Density Functions
-fig = plt.figure(figsize=(15, 10))
-ax = plt.axes(projection = '3d')
-plt.title("p(x|ω1) and p(x|ω2) for descrete x values following a Gaussian Distribution with μ1=(0.4, 0.8), μ2=(1.5, 2.7) and Σ=([1.5, 0], [0, 0.8])")
-plt.xlabel("x_a biological indicator")
-plt.ylabel("x_b biological indicator")
-ax.set_zlabel("pdf value")
-ax.plot_surface(X1, X2, pdf1, color="green")
-ax.plot_surface(X1, X2, pdf2, color="red")
-plt.legend(loc="upper right")
+# fig = plt.figure(figsize=(15, 10))
+# ax = plt.axes(projection = '3d')
+# plt.title("p(x|ω1) and p(x|ω2) for descrete x values following a Gaussian Distribution with μ1=(0.4, 0.8), μ2=(1.5, 2.7) and Σ=([1.5, 0], [0, 0.8])")
+# plt.xlabel("x_a biological indicator")
+# plt.ylabel("x_b biological indicator")
+# ax.set_zlabel("pdf value")
+# ax.plot_surface(X1, X2, pdf1, color="green")
+# ax.plot_surface(X1, X2, pdf2, color="red")
+# plt.legend(loc="upper right")
 # plt.show()
 
 # # ***Task A.2***
@@ -82,13 +83,13 @@ plt.legend(loc="upper right")
 p = pdf1 * p_1 + pdf2 * p_2
 
 #Plotting the total PDF in a 3-D figure
-fig = plt.figure(figsize=(10, 10))
-ax = plt.axes(projection = '3d')
-plt.title("Total Probability Distribution")
-plt.xlabel("x_a biological indicator")
-plt.ylabel("x_b biological indicator")
-ax.set_zlabel("Value of total pdf")
-ax.plot_surface(X1, X2, p)
+# fig = plt.figure(figsize=(10, 10))
+# ax = plt.axes(projection = '3d')
+# plt.title("Total Probability Distribution")
+# plt.xlabel("x_a biological indicator")
+# plt.ylabel("x_b biological indicator")
+# ax.set_zlabel("Value of total pdf")
+# ax.plot_surface(X1, X2, p)
 # plt.show()
 
 
@@ -102,15 +103,15 @@ p_aposteriori_1 = (pdf1/p) * p_1
 p_aposteriori_2 = (pdf2/p) * p_2
 
 #Plotting the two a-posteriori probabilites as calculated from the Bayes Theorem
-fig = plt.figure(figsize=(10, 10)) # prepare a figure
-ax = plt.axes(projection = '3d')
-plt.title("A-posteriori probabilities P(ω1|x) and P(ω2|x) according to Bayes Theorem")
-plt.xlabel("x_a indicator")
-plt.ylabel("x_b indicator")
-ax.set_zlabel("Value of both A-posteriori probabilities")
-ax.plot_surface(X1, X2, p_aposteriori_1)
-ax.plot_surface(X1, X2, p_aposteriori_2)
-plt.show()
+# fig = plt.figure(figsize=(10, 10)) # prepare a figure
+# ax = plt.axes(projection = '3d')
+# plt.title("A-posteriori probabilities P(ω1|x) and P(ω2|x) according to Bayes Theorem")
+# plt.xlabel("x_a indicator")
+# plt.ylabel("x_b indicator")
+# ax.set_zlabel("Value of both A-posteriori probabilities")
+# ax.plot_surface(X1, X2, p_aposteriori_1)
+# ax.plot_surface(X1, X2, p_aposteriori_2)
+# plt.show()
 
 
 # Task A.4
@@ -130,3 +131,11 @@ for i in range(len(X1)):
 # errors *= dataset_step**2
 bayes_mean_error = np.average(errors) # the mean bayesian error calculation
 print("The mean bayesian error is:" + str(bayes_mean_error))
+
+fig = plt.figure(figsize = (8,8))
+ax = fig.gca(projection='3d')
+ax.plot_surface(X1, X2, pdf1-pdf2, rstride=1, cstride=1, cmap = cm.viridis, antialiased=False, alpha = 0.5)
+ax.contour(X1, X2, pdf1-pdf2, zdir='z', offset=-2, levels = [0])
+ax.contour(X1, X2, pdf1-pdf2, levels = [0])
+ax.set_zlim(zmin = -2)
+plt.show()
