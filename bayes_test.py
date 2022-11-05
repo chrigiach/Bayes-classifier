@@ -110,15 +110,20 @@ p_aposteriori_1 = (np.divide(pdf1, p)) * p_1
 p_aposteriori_2 = (np.divide(pdf2, p)) * p_2
 
 #Plotting the two a-posteriori probabilites as calculated from the Bayes Theorem
-# fig = plt.figure(figsize=(10, 10)) # prepare a figure
-# ax = plt.axes(projection = '3d')
-# plt.title("A-posteriori probabilities P(ω1|x) and P(ω2|x) according to Bayes Theorem")
-# plt.xlabel("x_a indicator")
-# plt.ylabel("x_b indicator")
-# ax.set_zlabel("Value of both A-posteriori probabilities")
-# ax.plot_surface(X1, X2, p_aposteriori_1)
-# ax.plot_surface(X1, X2, p_aposteriori_2)
-# plt.show()
+fig = plt.figure(figsize=(10, 10)) # prepare a figure
+ax = plt.axes(projection = '3d')
+plt.title("A-posteriori probabilities P(ω1|x) and P(ω2|x) according to Bayes Theorem")
+plt.xlabel("x_a indicator")
+plt.ylabel("x_b indicator")
+ax.set_zlabel("Value of both A-posteriori probabilities")
+c1 = ax.plot_surface(X1, X2, p_aposteriori_1, label="A-posteriori probability P(ω1|x)")
+c1._facecolors2d=c1._facecolor3d
+c1._edgecolors2d=c1._edgecolor3d
+c2 = ax.plot_surface(X1, X2, p_aposteriori_2, label="A-posteriori probability P(ω2|x)")
+c2._facecolors2d = c2._facecolor3d
+c2._edgecolors2d = c2._edgecolor3d
+plt.legend(loc="upper right")
+plt.show()
 
 
 # Task A.4
