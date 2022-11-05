@@ -144,3 +144,11 @@ for i in range(len(X1)):
 
 bayes_mean_error = np.average(errors) # the mean bayesian error calculation
 print("The mean bayesian error is:" + str(bayes_mean_error))
+
+fig = plt.figure(figsize = (8,8))
+ax = fig.gca(projection='3d')
+ax.plot_surface(X1, X2, pdf1-pdf2, rstride=1, cstride=1, cmap = cm.viridis, antialiased=False, alpha = 0.5)
+ax.contour(X1, X2, pdf1-pdf2, zdir='z', offset=-2, levels = [0])
+ax.contour(X1, X2, pdf1-pdf2, levels = [0])
+ax.set_zlim(zmin = -2)
+plt.show()
