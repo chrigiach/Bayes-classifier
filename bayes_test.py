@@ -102,7 +102,7 @@ plt.show()
 
 # Task A.3
 
-#A posteriori probabilities according to Bayes Theorem:
+# A posteriori probabilities according to Bayes Theorem:
 # P(ω1|x) = (p(x|ω1)/P(x)) * P(ω1)
 # P(ω2|x) = (p(x|ω2)/P(x)) * P(ω2)
 
