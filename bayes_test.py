@@ -29,7 +29,7 @@ def linspace(start, stop, step=1.):
 
 
 # # ***Task A.1***
-# # Initializing the random seed
+# Initializing the random seed
 random_seed = 1000
 
 #Gaussian distribution for ω1 class "healthy people"
