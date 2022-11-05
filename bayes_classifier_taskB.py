@@ -132,7 +132,8 @@ plt.show()
 
 # Bayesian error
 errors = np.zeros(pdf1.shape) # table that will contain the errors for each point of the data set
-# for each point of the data set
+# Instead of an integral we will compute an approach using sums
+# We first compute each term separately
 for i in range(len(X1)):
     for j in range(len(X1[0])):
       if pdf1[i][j] >= pdf2[i][j]:
@@ -141,14 +142,19 @@ for i in range(len(X1)):
       else:
           # true is class 2 and the error is to choose class 1
           errors[i][j] = p_aposteriori_1[i][j] * p[i][j] # calculation of error for each specific point
+# Then we sum all the terms
+some_sum = list(map(sum, errors))
+errors_sum = sum(some_sum)
+# And then we multiply with the step (instead of dx)
+bayes_error = errors_sum * (dataset_step**2)
+# bayes_mean_error = np.average(errors) # the mean bayesian error calculation
+# print("The mean bayesian error is:" + str(bayes_mean_error))
+print("The mean bayesian error is:" + str(bayes_error))
 
-bayes_mean_error = np.average(errors) # the mean bayesian error calculation
-print("The mean bayesian error is:" + str(bayes_mean_error))
-
-fig = plt.figure(figsize = (8,8))
-ax = fig.gca(projection='3d')
-ax.plot_surface(X1, X2, pdf1-pdf2, rstride=1, cstride=1, cmap = cm.viridis, antialiased=False, alpha = 0.5)
-ax.contour(X1, X2, pdf1-pdf2, zdir='z', offset=-2, levels = [0])
-ax.contour(X1, X2, pdf1-pdf2, levels = [0])
-ax.set_zlim(zmin = -2)
-plt.show()
+# fig = plt.figure(figsize = (8,8))
+# ax = fig.gca(projection='3d')
+# ax.plot_surface(X1, X2, pdf1-pdf2, rstride=1, cstride=1, cmap = cm.viridis, antialiased=False, alpha = 0.5)
+# ax.contour(X1, X2, pdf1-pdf2, zdir='z', offset=-2, levels = [0])
+# ax.contour(X1, X2, pdf1-pdf2, levels = [0])
+# ax.set_zlim(zmin = -2)
+# plt.show()
