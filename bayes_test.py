@@ -83,7 +83,7 @@ plt.legend(loc="upper right")
 plt.show()
 
 # # ***Task A.2***
-# Total Probability: P(x) = p(x|ω1)*P(ω1) + p(x|ω2)*P(ω2)
+# Total Probability: p(x) = p(x|ω1)*P(ω1) + p(x|ω2)*P(ω2)
 p = np.array(pdf1 * p_1 + pdf2 * p_2)
 
 #Plotting the total PDF in a 3-D figure
@@ -103,8 +103,8 @@ plt.show()
 # Task A.3
 
 #A posteriori probabilities according to Bayes Theorem:
-# p(ω1|x) = (p(x|ω1)/P(x)) * P(ω1)
-# p(ω2|x) = (p(x|ω2)/P(x)) * P(ω2)
+# P(ω1|x) = (p(x|ω1)/P(x)) * P(ω1)
+# P(ω2|x) = (p(x|ω2)/P(x)) * P(ω2)
 
 p_aposteriori_1 = (np.divide(pdf1, p)) * p_1
 p_aposteriori_2 = (np.divide(pdf2, p)) * p_2
