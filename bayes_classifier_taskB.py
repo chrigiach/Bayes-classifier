@@ -28,8 +28,8 @@ def linspace(start, stop, step=1.):
   """
   return np.linspace(start, stop, int((stop - start) / step + 1))
 
-# # ***Task B.1***
-# # Initializing the random seed
+# Task B.1.1
+# Initializing the random seed
 random_seed = 1000
 
 #Gaussian distribution for ω1 class "healthy people"
@@ -82,7 +82,7 @@ c2._edgecolors2d = c2._edgecolor3d
 plt.legend(loc="upper right")
 plt.show()
 
-# # ***Task B.2***
+# Task B.1.2
 # Total Probability: P(x) = p(x|ω1)*P(ω1) + p(x|ω2)*P(ω2)
 p = np.array(pdf1 * p_1 + pdf2 * p_2)
 
@@ -98,3 +98,49 @@ c1._facecolors2d=c1._facecolor3d
 c1._edgecolors2d=c1._edgecolor3d
 plt.legend(loc="upper right")
 plt.show()
+
+
+
+# Task B.1.3
+
+#A posteriori probabilities according to Bayes Theorem:
+# p(ω1|x) = (p(x|ω1)/P(x)) * P(ω1)
+# p(ω2|x) = (p(x|ω2)/P(x)) * P(ω2)
+
+p_aposteriori_1 = (np.divide(pdf1, p)) * p_1
+p_aposteriori_2 = (np.divide(pdf2, p)) * p_2
+
+#Plotting the two a-posteriori probabilites as calculated from the Bayes Theorem
+fig = plt.figure(figsize=(10, 10)) # prepare a figure
+ax = plt.axes(projection = '3d')
+plt.title("A-posteriori probabilities P(ω1|x) and P(ω2|x) according to Bayes Theorem")
+plt.xlabel("x_a indicator")
+plt.ylabel("x_b indicator")
+ax.set_zlabel("Value of both A-posteriori probabilities")
+c1 = ax.plot_surface(X1, X2, p_aposteriori_1, label="A-posteriori probability P(ω1|x)")
+c1._facecolors2d=c1._facecolor3d
+c1._edgecolors2d=c1._edgecolor3d
+c2 = ax.plot_surface(X1, X2, p_aposteriori_2, label="A-posteriori probability P(ω2|x)")
+c2._facecolors2d = c2._facecolor3d
+c2._edgecolors2d = c2._edgecolor3d
+plt.legend(loc="upper right")
+plt.show()
+
+
+
+# Task B.1.4
+
+# Bayesian error
+errors = np.zeros(pdf1.shape) # table that will contain the errors for each point of the data set
+# for each point of the data set
+for i in range(len(X1)):
+    for j in range(len(X1[0])):
+      if pdf1[i][j] >= pdf2[i][j]:
+          # true is class 1 and the error is to choose class 2
+          errors[i][j] = p_aposteriori_2[i][j] * p[i][j] # calculation of error for each specific point
+      else:
+          # true is class 2 and the error is to choose class 1
+          errors[i][j] = p_aposteriori_1[i][j] * p[i][j] # calculation of error for each specific point
+
+bayes_mean_error = np.average(errors) # the mean bayesian error calculation
+print("The mean bayesian error is:" + str(bayes_mean_error))
