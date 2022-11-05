@@ -128,7 +128,7 @@ plt.show()
 
 # Task A.4
 
-# Bayesian error
+# Bayesian error calculation
 errors = np.zeros(pdf1.shape) # table that will contain the errors for each point of the data set
 # for each point of the data set
 for i in range(len(X1)):
